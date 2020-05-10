@@ -63,7 +63,7 @@ def done():
     while run:
         events = pygame.event.get()
         for event in events:
-            if event.kind == pygame.QUIT:
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 run = False
 
@@ -83,7 +83,7 @@ def kind(event):
     :param event: the event
     :return: the type of the event
     """
-    return event.kind
+    return event.type
 
 
 def get_mouse():
@@ -99,7 +99,7 @@ def check_quit():
     Checks if the user has quit
     :return: True if the user has quit, otherwise returns False
     """
-    if pygame.QUIT in [event.kind for event in pygame.event.get()]:
+    if pygame.QUIT in [event.type for event in pygame.event.get()]:
         return True
     return False
 
@@ -115,7 +115,8 @@ def frame_rate(num=60):
 
 
 def get_events():
-    return [event.kind for event in pygame.event.get()]
+    return [event.type for event in pygame.event.get()]
+
 
 def wait(seconds):
     """Stops the program for a certain amount of seconds"""
@@ -214,10 +215,10 @@ class Window:
                     func()
             events = pygame.event.get()
             for event in events:
-                if event.kind == pygame.QUIT:
+                if event.type == pygame.QUIT:
                     return
-                if event.kind in self.handlers:
-                    for func in self.handlers[event.kind]:
+                if event.type in self.handlers:
+                    for func in self.handlers[event.type]:
                         func(event)
             pygame.display.flip()
             clock = pygame.time.Clock()
