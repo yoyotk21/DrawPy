@@ -277,7 +277,7 @@ def example_event():
     def default():  # Sets the default function
         screen.ellipse(BLACK, [0, 0, 500, 700], 1)
 
-    def on_click():  # Sets an on click function
+    def on_click(event):  # Sets an on click function
         screen.ellipse(BLACK, [0, 0, 500, 700], 0)
 
     screen.register(screen.DEFAULT, default)  # Registers the functions
