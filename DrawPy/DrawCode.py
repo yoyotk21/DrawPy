@@ -9,7 +9,7 @@ from DrawPy import *
 
 def main():
     screen = Window((500, 500), "MyWindow")  # Creates the window
-    screen.circle(BLACK, [250, 250], 250, 0)  # Draws a circle centered at (250, 250) with a radius of 250
+    screen.circle([250, 250], 250)  # Draws a circle centered at (250, 250) with a radius of 250
     draw()  # Flips the drawings on to the screen
     done()  # Waits to close the window
 
@@ -26,7 +26,7 @@ try:
 except:
     print("You need pygame to run this")
     has_pygame = False
-assert has_pygame
+assert has_pygame == True
 
 pygame.init()
 # Defining some variables and functions
@@ -138,68 +138,38 @@ class Window:
         self.win.fill(self.color)
         draw()
 
-    def rectangle(self, color, rect, thickness=1):
-        """
-        Draws a rectangle
-        :param color: The color
-        :param rect: The position of the rectangle. First 2 items are location and next 2 are length and width
-        :param thickness: How thick the outside is. 0 means fill
-        :return: None
-        """
+    def rectangle(self, rect, color=BLACK, thickness=1):
+        """Draws a rectangle"""
         if rect is None:
             rect = [0, 0, 0, 0]
         pygame.draw.rect(self.win, color, rect, thickness)
 
-    def circle(self, color, circle, radius, thickness=1):
-        """
-        Draws a circle
-        :param color: The color
-        :param circle: The location of the center of the circle
-        :param radius: The radius of the circle
-        :param thickness: The thickness of the circle
-        :return: None
-        """
+    def circle(self, circle, radius, color=BLACK, thickness=1):
+        """Draws a circle"""
         if circle is None:
             circle = [0, 0]
         pygame.draw.circle(self.win, color, circle, radius, thickness)
 
-    def line(self, color, line, thickness=1):
-        """
-        Draws a line
-        :param color: the color of the line
-        :param line: the location of the line
-        :param thickness: the thickness of the line
-        :return: None
-        """
+    def line(self, line, color=BLACK, thickness=1):
+        """Draws a line"""
         if line is None:
             line = [0, 0, 0, 0]
         pygame.draw.line(self.win, color, line[:2], line[2:], thickness)
 
-    def ellipse(self, color, ellipse, thickness=1):
+    def ellipse(self, ellipse, color=BLACK, thickness=1):
         """Draws an ellipse"""
         if ellipse is None:
             ellipse = [0, 0, 0, 0]
         pygame.draw.ellipse(self.win, color, ellipse, thickness)
 
-    def arc(self, color, arc, start_angle, stop_angle, thickness=1):
-        """
-        Draws an arc
-        :param color: the color
-        :param arc: The rectangle surrounding the arc
-        :param start_angle: The start angle of the arc
-        :param stop_angle: The stop angle of the arc
-        :param thickness: the thickness of the arc
-        :return: None
-        """
+    def arc(self, arc, start_angle, stop_angle, color=BLACK, thickness=1):
+        """Draws an arc"""
         if arc is None:
             arc = [0, 0, 0, 0]
         pygame.draw.arc(self.win, color, arc, start_angle, stop_angle, thickness)
 
     def clear(self):
-        """
-        Clears the screen to it's original color
-        :return: None
-        """
+        """Clears the screen to its original color"""
         self.win.fill(self.color)
 
     def register(self, kind, func):
@@ -209,6 +179,7 @@ class Window:
         self.handlers[kind].append(func)
 
     def go(self, framerate=60, clear=False):
+        """Runs the program and acts upon the events"""
         while True:
             if Window.DEFAULT in self.handlers:
                 for func in self.handlers[Window.DEFAULT]:
@@ -252,7 +223,7 @@ def example_animation():
 
     # Main loop, used for animations and some games
     while not check_quit():  # Loop until the user closes the window
-        screen.circle(BLACK, [x_pos, y_pos], 25, 0)  # Draws the circle
+        screen.circle( [x_pos, y_pos], 25)  # Draws the circle
         x_pos += x_change  # Moves the position of the circle
         y_pos += y_change
         # Causes the circle to bounce if it touches the edge
@@ -275,10 +246,10 @@ def example_event():
     screen = Window((500, 700), "My Window", BLUE)  # Creates the screen
 
     def default():  # Sets the default function
-        screen.ellipse(BLACK, [0, 0, 500, 700], 1)
+        screen.ellipse([0, 0, 500, 700])
 
     def on_click(event):  # Sets an on click function
-        screen.ellipse(BLACK, [0, 0, 500, 700], 0)
+        screen.ellipse([0, 0, 500, 700], thickness=0)  # Draws a filled in ellipse
 
     screen.register(screen.DEFAULT, default)  # Registers the functions
     screen.register(MOUSEBUTTONDOWN, on_click)
@@ -293,13 +264,14 @@ def help():
     screen = Window((100, 100), "MyWindow", BLUE)  # Creates a window with dimensions 100x100 
 
     Drawing Commands:
-    screen.rectangle(BLACK, [0, 0, 50, 50], thickness=1)  # Draws a black rectangle with a top left corner at (0, 0) and
+    Note that for the drawing commands below, the color and thickness arguments are optional
+    screen.rectangle([0, 0, 50, 50], BLACK, thickness=1)  # Draws a black rectangle with a top left corner at (0, 0) and
         a length and width of 50 
-    screen.circle(RED, [50, 50], 50, 1]  # Draws a red circle centered at (50, 50) with a radius of 50 
-    screen.line(WHITE, [0, 0, 100, 100], 1)  # Draws a white line from (0, 0) to (100, 100)
-    screen.ellipse(BLACK, [0, 0, 100, 100], 1)  # Draws an ellipse inside the rectangle given by the coordinates
+    screen.circle([50, 50], 50, 1])  # Draws a red circle centered at (50, 50) with a radius of 50 
+    screen.line([0, 0, 100, 100], WHITE)  # Draws a white line from (0, 0) to (100, 100)
+    screen.ellipse([0, 0, 100, 100], 1)  # Draws an ellipse inside the rectangle given by the coordinates
         [0, 0, 100, 100]
-    screen.arc(BLACK, [0, 0, 100, 100], PI/4, PI/2, 1)  # Draws an arc of the ellipse above. Starts at angle PI/4 and
+    screen.arc([0, 0, 100, 100], PI/4, PI/2)  # Draws an arc of the ellipse above. Starts at angle PI/4 and
         stops at PI/2
     screen.clear()  # Clears the screen to it's original color
 
@@ -324,7 +296,7 @@ def help():
 
     screen = Window((500, 700), "My Window", RED)
     while not check_quit():  # Runs until the user has quit the program
-        screen.circle(BLACK, [50, 50], 50, 1) 
+        screen.circle([50, 50], 50) 
 
         draw()  # Flips the drawing to the screen
         frame_rate(60)  # Sets a frame rate of 60 fps
@@ -337,11 +309,11 @@ def help():
 
 
     def default():  # Will always run this function
-        screen.ellipse(BLACK, [0, 0, 500, 700], 1)
+        screen.ellipse([0, 0, 500, 700])
 
 
     def on_click(event):  # Makes a function that runs when the mouse is pressed
-        screen.ellipse(BLACK, [0, 0, 500, 700], 0)
+        screen.ellipse([0, 0, 500, 700], thickness=0)
 
 
     screen.register(screen.DEFAULT, default)  # Registers the functions
