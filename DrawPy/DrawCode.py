@@ -340,7 +340,7 @@ def help():
         screen.ellipse(BLACK, [0, 0, 500, 700], 1)
 
 
-    def on_click():  # Makes a function that runs when the mouse is pressed
+    def on_click(event):  # Makes a function that runs when the mouse is pressed
         screen.ellipse(BLACK, [0, 0, 500, 700], 0)
 
 
