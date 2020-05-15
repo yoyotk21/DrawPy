@@ -11,7 +11,7 @@ Format 1, for basic graphics and animations:
     from DrawPy import *
     
     screen = Window((500, 500), "MyWindow")  # Creates the window
-    screen.circle(BLACK, [250, 250], 250, 0)  # Draws a circle centered at (250, 250) with a radius of 250
+    screen.circle([250, 250], 250)  # Draws a circle centered at (250, 250) with a radius of 250
     draw()  # Flips the drawings on to the screen
     done()  # Waits to close the window
 Format 2, for more complex graphics and animations. Also suitable for simple games:
@@ -29,7 +29,7 @@ Format 2, for more complex graphics and animations. Also suitable for simple gam
 
     # Main loop, used for animations and some games
     while not check_quit():  # Loop until the user closes the window
-        screen.circle(BLACK, [x_pos, y_pos], 25, 0)  # Draws the circle
+        screen.circle([x_pos, y_pos], 25, thickness=0)  # Draws the circle
         x_pos += x_change  # Moves the position of the circle
         y_pos += y_change
         # Causes the circle to bounce if it touches the edge
@@ -52,10 +52,10 @@ Format 3, more advanced and for event based graphics, animations, and games:
     screen = Window((500, 700), "My Window", BLUE)  # Creates the screen
 
     def default():  # Sets the default function
-        screen.ellipse(BLACK, [0, 0, 500, 700], 1)
+        screen.ellipse([0, 0, 500, 700])
 
-    def on_click(event):  # Sets an on click function
-        screen.ellipse(BLACK, [0, 0, 500, 700], 0)
+    def on_click():  # Sets an on click function
+        screen.ellipse([0, 0, 500, 700], thickness=0)
 
     screen.register(screen.DEFAULT, default)  # Registers the functions
     screen.register(MOUSEBUTTONDOWN, on_click)
